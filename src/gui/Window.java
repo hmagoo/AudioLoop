@@ -1,6 +1,7 @@
 package gui;
 
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
 import java.awt.*;
 
 public class Window extends JFrame{
@@ -55,7 +56,7 @@ public class Window extends JFrame{
             buttons[i]=new JButton("loop" + i + ".mid");
             buttons[i].setMargin(new Insets(50,15,50,15));
             buttons[i].setBackground(Color.LIGHT_GRAY);
-            buttons[i].setBorder();
+//            buttons[i].setBorder(BorderFactory.createBevelBorder);
             container.add(buttons[i]);
 
         }
