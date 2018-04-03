@@ -32,7 +32,7 @@ public class PlayMidiAudio {
         cMajor.setLoopEndPoint(oneQuarterNote*5);
         cMajor.setLoopCount(Sequencer.LOOP_CONTINUOUSLY);
 
-        InputStream eMajorStream = new BufferedInputStream(new FileInputStream(new File("music\\scale_chords_small\\midi\\scale_e_major.mid")));
+        InputStream eMajorStream = new BufferedInputStream(new FileInputStream(new File("music" + File.separator + "scale_chords_small" + File.separator + "midi" + File.separator + "scale_e_major.mid")));
         Sequencer eMajor = MidiSystem.getSequencer();
         eMajor.open();
         eMajor.setSequence(eMajorStream);
@@ -40,7 +40,7 @@ public class PlayMidiAudio {
         eMajor.setLoopEndPoint(oneQuarterNote*5);
         eMajor.setLoopCount(Sequencer.LOOP_CONTINUOUSLY);
 
-        InputStream gMajorStream = new BufferedInputStream(new FileInputStream(new File("music\\scale_chords_small\\midi\\scale_g_major.mid")));
+        InputStream gMajorStream = new BufferedInputStream(new FileInputStream(new File("music" + File.separator + "scale_chords_small" + File.separator + "midi" + File.separator + "scale_g_major.mid")));
         Sequencer gMajor = MidiSystem.getSequencer();
         gMajor.open();
         gMajor.setSequence(gMajorStream);
@@ -85,7 +85,7 @@ public class PlayMidiAudio {
         third.setLoopCount(0);
 
         while(first.getTickPosition() < oneQuarterNote * 8){
-            //while less than 8 eigth notes played, continue playing
+            //while less than 8 eight notes played, continue playing
         }
 
 
