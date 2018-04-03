@@ -1,11 +1,10 @@
+package engine;
+
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import javax.sound.midi.ControllerEventListener;
-import javax.sound.midi.MidiSystem;
-import javax.sound.midi.Sequencer;
-import javax.sound.midi.ShortMessage;
+import javax.sound.midi.*;
 
 public class PlayMidiAudio {
     public static void main(String[] args) throws Exception {
@@ -26,6 +25,8 @@ public class PlayMidiAudio {
 
         long oneQuarterNote = 960;
 
+
+
         cMajor.setSequence(is);
         cMajor.setTickPosition(0);
         cMajor.setLoopStartPoint(0);
@@ -34,7 +35,7 @@ public class PlayMidiAudio {
 
         InputStream eMajorStream = new BufferedInputStream(new FileInputStream(new File("music" + File.separator + "scale_chords_small" + File.separator + "midi" + File.separator + "scale_e_major.mid")));
         Sequencer eMajor = MidiSystem.getSequencer();
-        eMajor.open();
+        //eMajor.open();
         eMajor.setSequence(eMajorStream);
         eMajor.setLoopStartPoint(0);
         eMajor.setLoopEndPoint(oneQuarterNote*5);
@@ -56,6 +57,15 @@ public class PlayMidiAudio {
         Sequencer second = cMajor;
         Sequencer third = gMajor;
 
+        System.out.println(first.getTempoFactor());
+        System.out.println(first.getTempoInBPM());
+        System.out.println(first.getTempoInMPQ());
+//        System.out.println(first.);
+//        System.out.println(first.);
+//        System.out.println(first.);
+//        System.out.println(first.);
+//        System.out.println(first.);
+        first.open();
         first.start();
 
         int loops = 0;
@@ -77,12 +87,16 @@ public class PlayMidiAudio {
             } else {
                 prevPos = curPosition;
             }
+
         }
 
         //continue playing to the end of the file
         first.setLoopCount(0);
         second.setLoopCount(0);
         third.setLoopCount(0);
+        first.setTickPosition(first.getLoopEndPoint());
+        second.setTickPosition(second.getLoopEndPoint());
+        third.setTickPosition(third.getLoopEndPoint());
 
         while(first.getTickPosition() < oneQuarterNote * 8){
             //while less than 8 eight notes played, continue playing
@@ -92,10 +106,14 @@ public class PlayMidiAudio {
 
 
         //stop playback
+        //can change to stop
         System.out.println("Stopping the midi");
-        cMajor.close();
-        eMajor.close();
-        gMajor.close();
+//        cMajor.close();
+//        eMajor.close();
+//        gMajor.close();
 
+        cMajor.stop();
+        eMajor.stop();
+        gMajor.stop();
     }
 }
