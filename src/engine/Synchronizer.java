@@ -3,7 +3,7 @@ package engine;
 import java.util.ArrayList;
 
 public class Synchronizer implements Runnable {
-    private static Synchronizer synchronizer;
+    private static volatile Synchronizer synchronizer;
     private volatile ArrayList<MidiByte> toStart;
     private volatile ArrayList<MidiByte> toStop;
     private volatile ArrayList<MidiByte> playing;
@@ -75,12 +75,20 @@ public class Synchronizer implements Runnable {
         toStart.clear();
     }
 
+    private void printAll(){
+        System.out.println("Current State");
+        for(MidiByte m : playing){
+            System.out.println(m.getTickPosition());
+        }
+    }
+
     @Override
     public void run() {
         try {
             Thread.sleep(250);
         } catch (InterruptedException e) {
             e.printStackTrace();
+            System.out.println("We are ok though");
         }
 
         startAll();
@@ -92,6 +100,7 @@ public class Synchronizer implements Runnable {
             if(prev > cur){
                 startAll();
                 stopAll();
+                printAll();
             }
 
             prev = cur;
