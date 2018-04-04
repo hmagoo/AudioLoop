@@ -12,12 +12,9 @@ public class Window extends JFrame{
         super("Audi Loop Creation Tool");
         setSize(1024,720);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-
         LoopsScrollPane scrollPane = LoopsScrollPane.getPane();
 
         add(scrollPane);
-
-        setVisible(true);
     }
 
     public static Window getWindow() {
