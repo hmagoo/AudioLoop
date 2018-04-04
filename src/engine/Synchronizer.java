@@ -88,7 +88,6 @@ public class Synchronizer implements Runnable {
             Thread.sleep(250);
         } catch (InterruptedException e) {
             e.printStackTrace();
-            System.out.println("We are ok though");
         }
 
         startAll();
