@@ -60,11 +60,7 @@ public class PlayMidiAudio {
         System.out.println(first.getTempoFactor());
         System.out.println(first.getTempoInBPM());
         System.out.println(first.getTempoInMPQ());
-//        System.out.println(first.);
-//        System.out.println(first.);
-//        System.out.println(first.);
-//        System.out.println(first.);
-//        System.out.println(first.);
+
         first.open();
         first.start();
 
