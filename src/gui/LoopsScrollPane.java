@@ -1,6 +1,7 @@
 package gui;
 
 import engine.MidiByte;
+import engine.MidiBytesInUse;
 import javafx.stage.FileChooser;
 
 import javax.sound.midi.InvalidMidiDataException;
@@ -11,12 +12,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import static javax.swing.JLayeredPane.POPUP_LAYER;
+import static javax.swing.JOptionPane.showMessageDialog;
 
 public class LoopsScrollPane extends JScrollPane{
     private static LoopsScrollPane pane = new LoopsScrollPane();
@@ -26,6 +26,7 @@ public class LoopsScrollPane extends JScrollPane{
     private int columns = 6;
     private double buttonWeight = .93;
     private double paddingWeight = .07;
+    private MidiBytesInUse midiBytes;
 
 
     private LoopsScrollPane(){
@@ -35,6 +36,10 @@ public class LoopsScrollPane extends JScrollPane{
         JPanel header = new JPanel(headerGrid);
         header.setBorder(BorderFactory.createEmptyBorder(15,15,15,15));
         header.setBackground(Color.DARK_GRAY);
+
+        getVerticalScrollBar().setUnitIncrement(16);
+
+        midiBytes = MidiBytesInUse.getMidiBytes();
 
         JButton addFolder = new JButton("Add files");
 
@@ -69,26 +74,80 @@ public class LoopsScrollPane extends JScrollPane{
 
                 List<File> files = (List<File>) chooser.showDialog(f);
 
+                String duplicates = "Trying to add the following files multiple times:\n";
+                String successful = "\nNew midi files added:\n";
+                String midiUnavailable = "No resources for the following files:\n";
+                String fileReadError = "Could not open the following files:\n";
+                String notMidi = "The following files were not midi files:\n";
+
+                boolean hasDuplicates = false;
+                boolean hasSuccess = false;
+                boolean hasMidiUnavailable = false;
+                boolean hasFileReadError = false;
+                boolean hasNotMidi = false;
+
                 if(files != null) {
                     for (File curFile : files) {
                         try {
-                            addLoopButton(new LoopButton(new MidiByte(curFile)));
+                            MidiByte m = new MidiByte(curFile);
+                            if(!midiBytes.add(m)){
+                                duplicates += curFile.getPath() + "\n";
+                                hasDuplicates = true;
+                            } else {
+                                successful += curFile.getPath() + "\n";
+                                addLoopButton(new LoopButton(m));
+                                hasSuccess = true;
+
+                            }
                         } catch (MidiUnavailableException e1) {
-                            e1.printStackTrace();
+                            //e1.printStackTrace();
+                            midiUnavailable += curFile.getPath() + "\n";
+                            hasMidiUnavailable = true;
                         } catch (IOException e1) {
-                            e1.printStackTrace();
+                            //e1.printStackTrace();
+                            fileReadError += curFile.getPath() + "\n";
+                            hasFileReadError = true;
                         } catch (InvalidMidiDataException e1) {
-                            e1.printStackTrace();
+                            //e1.printStackTrace();
+                            notMidi += curFile.getPath() + "\n";
+                            hasNotMidi = true;
+//                            showMessageDialog(Window.getWindow(), "The file supplied was not a midi file", "Error", JOptionPane.ERROR_MESSAGE);
                         }
                     }
                 }
 
-                System.out.println(files);
+
+                String message = "";
+
+                if(hasNotMidi){
+                    message += hasNotMidi;
+                }
+
+                if(hasFileReadError){
+                    message += fileReadError;
+                }
+
+                if(hasMidiUnavailable){
+                    message += midiUnavailable;
+                }
+
+                if(hasDuplicates){
+                    message += duplicates;
+                }
+
+                if(hasSuccess){
+                    message += successful;
+                }
+
+                if(hasNotMidi || hasFileReadError || hasMidiUnavailable || hasDuplicates) {
+                    showMessageDialog(Window.getWindow(), message, "Error", JOptionPane.ERROR_MESSAGE);
+                }
 
                 window.remove(disabledOverlay);
                 window.setLayout(new GridLayout());
                 window.revalidate();
                 window.repaint();
+
             }
         });
 
