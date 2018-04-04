@@ -4,7 +4,7 @@ import javax.sound.midi.*;
 import java.io.*;
 import java.util.StringTokenizer;
 
-public class MidiByte  {
+public class MidiByte{
     private Sequencer s;
     private int beatLength;
     String path;
@@ -21,6 +21,7 @@ public class MidiByte  {
         s.setLoopStartPoint(0);
         beatLength = sequence.getResolution();
         s.setLoopEndPoint(beatLength * 8);
+
         s.setLoopCount(Sequencer.LOOP_CONTINUOUSLY);
         s.open();
 
@@ -31,7 +32,6 @@ public class MidiByte  {
             name = tok.nextToken();
         }
 
-//        name.replace(".mid", "");
         if(name.regionMatches(true, name.length() - 4, ".mid", 0,4)){
             name = name.substring(0,name.length() - 4);
         }
@@ -53,7 +53,29 @@ public class MidiByte  {
         return s.getTickPosition();
     }
 
+    @Override
     public String toString(){
         return name;
+    }
+
+    public void meta(MetaMessage event){
+        if(event.getType() == 47){
+            System.out.println("Stopping " + name);
+        }else {
+            System.out.println("Meta event triggered " + event);
+        }
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (object == null){
+            return false;
+        } else if(object instanceof MidiByte) {
+            return path.equals(((MidiByte) object).path);
+        } else {
+            System.out.println("Other type");
+            System.out.println(object.getClass());
+            return false;
+        }
     }
 }
