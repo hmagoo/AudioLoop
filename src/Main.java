@@ -1,15 +1,14 @@
 import engine.MidiByte;
-import gui.LoopButton;
-import gui.LoopsScrollPane;
-import gui.Window;
+import gui.*;
+import javafx.application.Application;
+import javafx.stage.Stage;
 
 import java.io.File;
-
 /**
  * Created by WHOmagoo on 4/2/2018.
  */
-public class Main {
-    public static void main(String[] args) throws Exception{
+public class Main extends Application{
+    public static void main(String[] args) throws Exception {
         Window window = Window.getWindow();
         LoopsScrollPane scrollPane = LoopsScrollPane.getPane();
 
@@ -20,20 +19,25 @@ public class Main {
 
         LoopButton MusicButtons[] = new LoopButton[100];
 
-        MusicButtons[0] = new LoopButton("C major", c);
-        MusicButtons[1] = new LoopButton("E major", e);
-        MusicButtons[2] = new LoopButton("G major", g);
+        MusicButtons[0] = new LoopButton(c);
+        MusicButtons[1] = new LoopButton(e);
+        MusicButtons[2] = new LoopButton(g);
 
-        for(LoopButton button : MusicButtons){
-            if(button == null){
+        for (LoopButton button : MusicButtons) {
+            if (button == null) {
                 break;
             } else {
-                System.out.println("Adding something");
                 scrollPane.addLoopButton(button);
             }
         }
 
-        window.add(scrollPane);
-        window.revalidate();
+        window.setVisible(true);
+
+        Application.launch();
+    }
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+
     }
 }
