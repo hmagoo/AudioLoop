@@ -12,8 +12,8 @@ public class LoopButton extends JButton implements ActionListener{
     Synchronizer s;
 
 
-    public LoopButton(String text, MidiByte m){
-        super(text);
+    public LoopButton(MidiByte m){
+        super(m.toString());
         this.m = m;
         setMargin(new Insets(50,15,50,15));
         setBackground(new Color(0xdb7a7a));
