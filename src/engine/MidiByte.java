@@ -20,7 +20,7 @@ public class MidiByte{
         s.setSequence(sequence);
         s.setLoopStartPoint(0);
         beatLength = sequence.getResolution();
-        s.setLoopEndPoint(beatLength * 8);
+        s.setLoopEndPoint(-1);
 
         s.setLoopCount(Sequencer.LOOP_CONTINUOUSLY);
         s.open();
