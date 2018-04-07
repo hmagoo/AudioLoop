@@ -16,15 +16,18 @@ public class Main extends Application{
         MidiByte c = new MidiByte("music" + File.separator + "scale_chords_small" + File.separator + "midi" + File.separator + "scale_c_major.mid");
         MidiByte e = new MidiByte("music" + File.separator + "scale_chords_small" + File.separator + "midi" + File.separator + "scale_e_major.mid");
         MidiByte g = new MidiByte("music" + File.separator + "scale_chords_small" + File.separator + "midi" + File.separator + "scale_g_major.mid");
+        MidiByte custom = new MidiByte("music" + File.separator + "stuff.mid");
 
         LoopButton MusicButtons[] = new LoopButton[100];
 
-        MusicButtons[0] = new LoopButton(c);
-        MusicButtons[1] = new LoopButton(e);
-        MusicButtons[2] = new LoopButton(g);
+//        MusicButtons[0] = new LoopButton(c);
+//        MusicButtons[1] = new LoopButton(e);
+//        MusicButtons[2] = new LoopButton(g);
+        MusicButtons[0] = new LoopButton(custom, 1);
+        MusicButtons[1] = new LoopButton(custom, 2);
 
         for (LoopButton button : MusicButtons) {
-            if (button == null) {
+            if (button == null){
                 break;
             } else {
                 scrollPane.addLoopButton(button);

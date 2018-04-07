@@ -4,7 +4,7 @@ import javax.sound.midi.*;
 import java.io.*;
 import java.util.StringTokenizer;
 
-public class MidiByte{
+public class MidiByte {
     private Sequencer s;
     private int beatLength;
     String path;
@@ -18,10 +18,11 @@ public class MidiByte{
         s = MidiSystem.getSequencer();
         Sequence sequence = MidiSystem.getSequence(file);
         s.setSequence(sequence);
-        s.setLoopStartPoint(0);
-        beatLength = sequence.getResolution();
-        s.setLoopEndPoint(-1);
+        System.out.println(s.getClass());
 
+        beatLength = sequence.getResolution();
+        s.setLoopStartPoint(0);
+        s.setLoopEndPoint(-1);
         s.setLoopCount(Sequencer.LOOP_CONTINUOUSLY);
         s.open();
 
@@ -43,6 +44,10 @@ public class MidiByte{
 
     public void startLoop(){
         s.start();
+    }
+
+    public void setTrackMute(int track, boolean flag){
+        s.setTrackMute(track, flag);
     }
 
     public void close(){

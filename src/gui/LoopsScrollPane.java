@@ -95,7 +95,8 @@ public class LoopsScrollPane extends JScrollPane{
                                 hasDuplicates = true;
                             } else {
                                 successful += curFile.getPath() + "\n";
-                                addLoopButton(new LoopButton(m));
+                                //TODO update this to make a new button for each track;
+                                addLoopButton(new LoopButton(m, 0));
                                 hasSuccess = true;
 
                             }

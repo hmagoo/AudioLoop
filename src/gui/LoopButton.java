@@ -8,27 +8,31 @@ import engine.MidiByte;
 import engine.Synchronizer;
 
 public class LoopButton extends JButton implements ActionListener{
-    MidiByte m;
-    Synchronizer s;
+    private MidiByte m;
+    private Synchronizer s;
+    private int track;
 
-
-    public LoopButton(MidiByte m){
-        super(m.toString());
+    public LoopButton(MidiByte m, int track){
+        super(m.toString() + ":" + track);
         this.m = m;
+        this.track = track;
         setMargin(new Insets(50,15,50,15));
         setBackground(new Color(0xdb7a7a));
         addActionListener(this);
         s = Synchronizer.getSynchronizer();
+        m.startLoop();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if(getBackground() == Color.LIGHT_GRAY) {
             setBackground(new Color(0xdb7a7a));
-            s.stop(m);
+            m.setTrackMute(track, true);
+            //s.stop(m);
         } else {
             setBackground(Color.LIGHT_GRAY);
-            s.start(m);
+//            s.start(m);
+            m.setTrackMute(track, false);
         }
     }
 
