@@ -20,6 +20,7 @@ public class LoopButton extends JButton implements ActionListener{
         setBackground(new Color(0xdb7a7a));
         addActionListener(this);
         s = Synchronizer.getSynchronizer();
+        m.setTrackMute(track, true);
         m.startLoop();
     }
 
